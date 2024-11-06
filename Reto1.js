@@ -6,22 +6,18 @@
 
 function createMagicPotion(potions, target) {
     // Usamos un mapa para guardar los valores y sus índices
-    const seen = new Map();
+    const seen = new Map(); // MAP: clave - valor
 
     // Iteramos sobre cada poción
-    for (let i = 0; i < potions.lenght; i++) {
-        const currentPotion = potions[i];
-        const complement = target - currentPotion;
+    for (let i = 0; i < potions.length; i++) {
+        const currentPotion = potions[i]; //2
+        const complement = target - currentPotion;  //3
 
         // Verificamos si el complemento ya ha sido visto
         if (seen.has(complement)) {
-            // Devolver los índices: [índice del complemento, índice actual]
+            // Devol)ver los índices: [índice del complemento, índice actual]
             return [seen.get(complement), i];
         }
-        // Si no se ha encontrado, agregamos la poción actual al mapa
-        seen.set(currentPotion, i);
+        seen.set(currentPotion, i)
     }
-
-    // Si no hay una combinación que sume el valor objetivo, devolvemos undefined
-    return undefined;
 }
