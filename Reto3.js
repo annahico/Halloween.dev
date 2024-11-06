@@ -9,3 +9,46 @@
 
 // Y tienes que devolver el valor total de peligro del camino más seguro de la esquina superior izquierda (posición [0][0]) a la esquina inferior derecha (posición [n-1][m-1]).
 
+function findSafestPath(dream) {
+    const rowsNum = dream.length;
+    const columnsNum = dream[0].length;
+    console.log({ rowsNum, columnsNum }); 
+
+    const dangersLevels = [];
+    dangersLevels[0] = dream[0][0]; // posición 1
+
+    for (let col = 1; col < columnsNum; col++) { 
+        dangersLevels[col] = dangersLevels[col - 1] + dream[0][col];
+    }
+    console.log(dangersLevels);  
+
+    for (let row = 1; row < rowsNum; row++) {
+        dangersLevels[0] += dream[row][0] 
+
+        for (let col = 1; col < columnsNum; col++) {
+            dangersLevels[col] = Math.min
+            (dangersLevels[col], 
+            dangersLevels[col - 1])
+            + dream[row][col]
+        }
+    }
+    return dangersLevels[columnsNum - 1]
+}
+
+
+
+const dream = [
+    [1, 3, 1], // 1 + 3 + 1 movimientos
+    [1, 5, 1],
+    [4, 2, 1],
+  ]
+  
+  const bestPath = findSafestPath(dream) // Devuelve 7
+  // El mejor camino es:
+  // [0, 0] -> 1
+  // [0, 1] -> 3
+  // [0, 2] -> 1
+  // [1, 2] -> 1
+  // [2, 2] -> 1
+  
+  // 1 -> 3 -> 1 -> 1 -> 1 = 7
