@@ -22,9 +22,32 @@
 
 
 function findTheKiller(whisper, suspects) {
-    // Code here
-    return ''
+    const normalizedWhisper = whisper.toLowerCase();
+    const isExactMatch = normalizedWhisper.endsWith('$'); // Verifica si el susurro termina con '$'
+
+    // Función auxiliar para hacer coincidir el patrón
+    const matchesPattern = (suspect) => {
+        const normalizedSuspect = suspect.toLowerCase();
+        const whisperToUse = isExactMatch
+            ? normalizedWhisper.slice(0, -1) // Elimina el '$' si se requiere coincidencia exacta
+            : normalizedWhisper;
+
+        // Si se requiere coincidencia exacta, se verifica que las longitudes sean iguales
+        if (isExactMatch && whisperToUse.length !== normalizedSuspect.length) {
+            return false;
+        }
+
+        // Verifica que cada carácter coincida o sea un '~' (comodín)
+        return [...whisperToUse].every((char, i) => {
+            return char === '~' || char === normalizedSuspect[i];
+        });
+    };
+
+    // Filtra los sospechosos que coinciden con el patrón
+    const matchingSuspects = suspects.filter(matchesPattern);
+    return matchingSuspects.join(',');
 }
+
 
 
 
